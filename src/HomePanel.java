@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class HomePanel extends JPanel {
     private final MyFrame parentFrame;
-    JButton viewProductsButton;
-    JButton viewShipmentsButton;
+    ButtonDesign viewProductsButton;
+    ButtonDesign viewShipmentsButton;
 
     HomePanel(MyFrame parentFrame){
         this.parentFrame = parentFrame;
@@ -20,8 +20,8 @@ public class HomePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(nameLabel, gbc);
 
-        viewProductsButton = new JButton("View Products");
-        viewShipmentsButton = new JButton("View Shipments");
+        viewProductsButton = new ButtonDesign("View Products");
+        viewShipmentsButton = new ButtonDesign("View Shipments");
 
         gbc.gridx = 0;
         gbc.gridy = 1;
