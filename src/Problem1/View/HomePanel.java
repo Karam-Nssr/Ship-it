@@ -1,3 +1,4 @@
+package Problem1.View;
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +14,7 @@ public class HomePanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 100, 200, 100);
 
-        JLabel nameLabel = new JLabel(new ImageIcon(new ImageIcon("./src/Shipit-1.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        JLabel nameLabel = new JLabel(new ImageIcon(new ImageIcon("./src/Problem1/View/pics/Shipit-1.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
@@ -29,7 +30,7 @@ public class HomePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(viewProductsButton, gbc);
 
-        JLabel imageLabel = new JLabel(new ImageIcon(new ImageIcon("./src/Logo.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        JLabel imageLabel = new JLabel(new ImageIcon(new ImageIcon("./src/Problem1/View/pics/Logo.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = 1;

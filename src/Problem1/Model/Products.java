@@ -1,3 +1,5 @@
+package Problem1.Model;
+
 import java.util.ArrayList;
 
 public class Products{
@@ -75,7 +77,7 @@ public class Products{
         collectProducts(node.right, products);
     }
 
-    void inOrder(Node node){
+    public void inOrder(Node node){
         if(node==null){
             return;
         }
@@ -121,5 +123,29 @@ public class Products{
             node=node.left;
         }
         return node;
+    }
+
+    public ArrayList<Products> getProducts() {
+        return products;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

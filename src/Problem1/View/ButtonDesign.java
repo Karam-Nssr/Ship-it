@@ -1,3 +1,4 @@
+package Problem1.View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

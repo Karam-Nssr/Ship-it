@@ -1,9 +1,13 @@
+package Problem1.View;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import Problem1.Model.* ;
+
 
 public class ProductsPanel extends JPanel {
     private final MyFrame parentFrame;
@@ -24,7 +28,7 @@ public class ProductsPanel extends JPanel {
         productsTree.insert(3,"test8",100,3);
         productsTree.insert(6,"test9",100,2);
         productsTree.insert(0,"test10",100,4);
-        productsTree.inOrder(productsTree.root);
+        productsTree.inOrder(productsTree.getRoot());
         UI();
     }
     private void UI() {
@@ -43,7 +47,7 @@ public class ProductsPanel extends JPanel {
     }
     private void Refresh() {
         productsPanel.removeAll();
-        ArrayList<Products> products = productsTree.getProducts(productsTree.root);
+        ArrayList<Products> products = productsTree.getProducts(productsTree.getRoot());
         JPanel displayPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         displayPanel.setBackground(Color.decode("#D4E6F1"));
         for (Products product : products) {
@@ -62,27 +66,27 @@ public class ProductsPanel extends JPanel {
 
         productCard.add(Box.createRigidArea(new Dimension(0,10)));
         JLabel imageLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon("./src/Berserk-Necklace.jpg");
+        ImageIcon imageIcon = new ImageIcon("./src/Problem1/View/pics/Berserk-Necklace.jpg");
         Image foodImage = imageIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(foodImage));
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(imageLabel);
 
-        JLabel productNameLabel = new JLabel(product.name);
+        JLabel productNameLabel = new JLabel(product.getName());
         productNameLabel.setForeground(Color.decode("#2C3E50"));
         productNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
         productNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(productNameLabel);
         productCard.add(Box.createRigidArea(new Dimension(0,10)));
 
-        JLabel productPriceLabel = new JLabel(" ($" + product.price + ")");
+        JLabel productPriceLabel = new JLabel(" ($" + product.getPrice() + ")");
         productPriceLabel.setForeground(Color.decode("#2C3E50"));
         productPriceLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         productPriceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(productPriceLabel);
         productCard.add(Box.createRigidArea(new Dimension(0,5)));
 
-        JLabel productQuantityLabel = new JLabel(" (" + product.id+") ");
+        JLabel productQuantityLabel = new JLabel(" (" + product.getId()+") ");
         productQuantityLabel.setForeground(Color.decode("#2C3E50"));
         productQuantityLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         productQuantityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -94,9 +98,9 @@ public class ProductsPanel extends JPanel {
         spinnerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         spinnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(Box.createRigidArea(new Dimension(0,5)));
-        JSpinner spinner=new JSpinner(new SpinnerNumberModel(1,1,product.quantity,1));
+        JSpinner spinner=new JSpinner(new SpinnerNumberModel(1,1,product.getQuantity(),1));
         Dimension size = spinner.getPreferredSize();
-        spinner.setModel(new SpinnerNumberModel(1, 1, product.quantity, 1));
+        spinner.setModel(new SpinnerNumberModel(1, 1, product.getQuantity(), 1));
         spinner.setPreferredSize(size);
         productCard.add(spinnerLabel);
         productCard.add(spinner);
@@ -123,10 +127,10 @@ public class ProductsPanel extends JPanel {
     private void addToShipment(Products product,JSpinner spinner){
         int count=((SpinnerNumberModel)spinner.getModel()).getNumber().intValue();
         for (int i=0;i<count;i++){
-            shipmentProducts.put(product.name,count);
+            shipmentProducts.put(product.getName(),count);
             shipment.add(product);
         }
-        JOptionPane.showMessageDialog(this,count+" x "+product.name+" added to your Shipment!");
+        JOptionPane.showMessageDialog(this,count+" x "+product.getName()+" added to your Shipment!");
     }
     private JPanel Toolbar() {
         JPanel toolbar=new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -152,7 +156,7 @@ public class ProductsPanel extends JPanel {
         System.out.println("Nigga");
         System.out.println(shipmentProducts);
         for(Products p:shipment){
-            System.out.println(p.name+" "+p.id);
+            System.out.println(p.getName()+" "+p.getId());
         }
     }
     public void createOrderPanel(){

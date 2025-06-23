@@ -1,3 +1,4 @@
+package Problem1.View;
 import javax.swing.*;
 import java.awt.*;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -6,7 +7,7 @@ public class MyFrame extends JFrame {
     JPanel mainPanel;
     HomePanel homePanel;
     ProductsPanel productsPanel;
-    MyFrame(){
+    public MyFrame(){
         try{
             UIManager.setLookAndFeel(new FlatLightLaf());
         }catch (Exception e){
