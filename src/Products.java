@@ -1,5 +1,19 @@
+import java.util.ArrayList;
+
 public class Products{
+    ArrayList<Products> products;
     Node root;
+    int id;
+    String name;
+    double price;
+    int quantity;
+    public Products(int id, String name, double price, int quantity) {
+        this.id=id;
+        this.name=name;
+        this.price=price;
+        this.quantity=quantity;
+    }
+
     class Node{
         Node left,right;
         int id;
@@ -47,12 +61,27 @@ public class Products{
             return search(node.right,id);
         }
     }
+    public  ArrayList<Products> getProducts(Node node) {
+        products = new ArrayList<>();
+        collectProducts(node, products);
+        return products;
+    }
+    private  void collectProducts(Node node, ArrayList<Products> products) {
+        if (node == null) {
+            return;
+        }
+        collectProducts(node.left, products);
+        products.add(new Products(node.id, node.name, node.price, node.quantity));
+        collectProducts(node.right, products);
+    }
+
     void inOrder(Node node){
         if(node==null){
             return;
         }
         inOrder(node.left);
-        System.out.print(node.id+" ");
+        System.out.print(node.id+" "+node.name+" "+node.price+" "+node.quantity);
+        System.out.println();
         inOrder(node.right);
     }
     public void delete(int id){

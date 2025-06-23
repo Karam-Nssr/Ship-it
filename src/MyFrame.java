@@ -1,11 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
+import com.formdev.flatlaf.FlatLightLaf;
 public class MyFrame extends JFrame {
     private final CardLayout cardLayout;
     JPanel mainPanel;
     HomePanel homePanel;
     ProductsPanel productsPanel;
     MyFrame(){
+        try{
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        }catch (Exception e){
+            System.out.println(e);
+        }
         this.setTitle("Ship-it");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
