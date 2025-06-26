@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InputGridPanel extends JPanel {
-private JTextField[][] fields;
+JTextField[][] fields;
 int Grid[][];
+JButton Solve=new JButton("Solve");
 
     public InputGridPanel( int n, int m) {
         this.setLayout(new GridLayout(n+1, m-1, 5, 5));
@@ -18,20 +19,8 @@ int Grid[][];
                 this.add(fields[i][j]);
             }
         }
-        JButton Solve=new JButton("Solve");
         add(Solve);
-        Solve.addActionListener(e->{
-            try {
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        Grid[i][j]=Integer.parseInt(fields[i][j].getText());
-                    }
-                }
-            }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Please enter valid numbers!");
-            }
-        });
+
     }
 
     public String getCellValue(int i, int j) {

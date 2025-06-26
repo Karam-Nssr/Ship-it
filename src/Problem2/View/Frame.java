@@ -29,6 +29,23 @@ public class Frame extends JFrame {
             add(panel2);
             revalidate();
             repaint();
+            panel2.Solve.addActionListener(a->{
+                try {
+                    for (int i = 0; i < panel1.n; i++) {
+                        for (int j = 0; j < panel1.m; j++) {
+                            panel2.Grid[i][j]=Integer.parseInt(panel2.fields[i][j].getText());
+                        }
+                    }
+                }
+                catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter valid numbers!");
+                }
+                OutputPanel panel3=new OutputPanel(panel2.Grid,panel1.n,panel1.m);
+                remove(panel2);
+                add(panel3);
+                revalidate();
+                repaint();
+            });
 
         });
     }
