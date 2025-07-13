@@ -16,7 +16,7 @@ public class ProductsPanel extends JPanel {
     Map<String,Integer> shipmentProducts=new HashMap<>();
     private List<Products.Node> shipment=new ArrayList<>();
     //Shipment.Node
-    private List<Shipment> shipments=new ArrayList<>();
+    private List<Shipment.Node> shipments=new ArrayList<>();
     ProductsPanel(MyFrame parentFrame){
         this.parentFrame=parentFrame;
         productsTree =new Products();
