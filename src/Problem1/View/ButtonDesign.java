@@ -7,13 +7,14 @@ import java.awt.geom.RoundRectangle2D;
 public class ButtonDesign extends JButton {
     final private Color normalColor=new Color(205, 193, 181);
     final private Color hoverColor=new Color(225, 213, 201);
-    public ButtonDesign(String text){
+    public ButtonDesign(String text,Runnable action){
         super(text);
         setFocusable(false);
         setBackground(normalColor);
         setForeground(Color.DARK_GRAY);
         setFont(new Font("SansSerif",Font.BOLD,16));
         setPreferredSize(new Dimension(180,60));
+        addActionListener(e -> action.run());
         addMouseListener(new MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent e){
