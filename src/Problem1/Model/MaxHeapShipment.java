@@ -13,14 +13,34 @@ public class MaxHeapShipment {
         int id;
         String location;
         double cost;
-        Date date;
+        String date;
         int priority;
-        public Node(int id, String location, double cost, Date date, int priority) {
+        public Node(int id, String location, double cost, String date, int priority) {
             this.id = id;
             this.location = location;
             this.cost = cost;
             this.date = date;
             this.priority = priority;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public double getCost() {
+            return cost;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public int getPriority() {
+            return priority;
         }
     }
 
@@ -51,7 +71,7 @@ public class MaxHeapShipment {
         heap[j] = temp;
     }
 
-    public void insert(int id, String location, double cost, Date date, int priority) {
+    public void insert(int id, String location, double cost, String date, int priority) {
         if (size == capacity) {
             System.out.println("Heap is full");
             return;
