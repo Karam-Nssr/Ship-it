@@ -1,3 +1,4 @@
+package Problem2.Model;
 import java.util.*;
 
 public class Aya {
