@@ -3,20 +3,10 @@ package Problem1.Model;
 import java.util.ArrayList;
 
 public class Products{
-    ArrayList<Products> products;
+    ArrayList<Products.Node> products;
     Node root;
-    int id;
-    String name;
-    double price;
-    int quantity;
-    public Products(int id, String name, double price, int quantity) {
-        this.id=id;
-        this.name=name;
-        this.price=price;
-        this.quantity=quantity;
-    }
 
-    class Node{
+    public  class Node{
         Node left,right;
         int id;
         String name;
@@ -29,9 +19,32 @@ public class Products{
             this.quantity=quantity;
             left=right=null;
         }
+
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
     }
     public Products(){
         root=null;
+    }
+    public ArrayList<Products.Node> getProducts() {
+        return products;
+    }
+    public Node getRoot() {
+        return root;
     }
     public void insert(int id,String name,double price,int quantity){
         root=insert(root,id,name,price,quantity);
@@ -63,17 +76,17 @@ public class Products{
             return search(node.right,id);
         }
     }
-    public  ArrayList<Products> getProducts(Node node) {
+    public  ArrayList<Products.Node> getProducts(Node node) {
         products = new ArrayList<>();
         collectProducts(node, products);
         return products;
     }
-    private  void collectProducts(Node node, ArrayList<Products> products) {
+    private  void collectProducts(Node node, ArrayList<Products.Node> products) {
         if (node == null) {
             return;
         }
         collectProducts(node.left, products);
-        products.add(new Products(node.id, node.name, node.price, node.quantity));
+        products.add(new Products.Node(node.id, node.name, node.price, node.quantity));
         collectProducts(node.right, products);
     }
 
@@ -125,27 +138,5 @@ public class Products{
         return node;
     }
 
-    public ArrayList<Products> getProducts() {
-        return products;
-    }
 
-    public Node getRoot() {
-        return root;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
 }

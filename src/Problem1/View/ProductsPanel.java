@@ -14,7 +14,9 @@ public class ProductsPanel extends JPanel {
     Products productsTree;
     JPanel productsPanel;
     Map<String,Integer> shipmentProducts=new HashMap<>();
-    private List<Products> shipment=new ArrayList<>();
+    private List<Products.Node> shipment=new ArrayList<>();
+    //Shipment.Node
+    private List<Shipment> shipments=new ArrayList<>();
     ProductsPanel(MyFrame parentFrame){
         this.parentFrame=parentFrame;
         productsTree =new Products();
@@ -46,10 +48,10 @@ public class ProductsPanel extends JPanel {
     }
     private void Refresh() {
         productsPanel.removeAll();
-        ArrayList<Products> products = productsTree.getProducts(productsTree.getRoot());
+        ArrayList<Products.Node> products = productsTree.getProducts(productsTree.getRoot());
         JPanel displayPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         displayPanel.setBackground(Color.decode("#D4E6F1"));
-        for (Products product : products) {
+        for (Products.Node product : products) {
             displayPanel.add(createProductPanel(product));
         }
         ButtonDesign addProduct=new ButtonDesign("Add Product",this::showProductDialog);
@@ -59,7 +61,7 @@ public class ProductsPanel extends JPanel {
         repaint();
     }
 
-    public JPanel createProductPanel(Products product){
+    public JPanel createProductPanel(Products.Node product){
         JPanel productCard=new JPanel();
         productCard.setBackground(Color.decode("#F0F8FF"));
         productCard.setLayout(new BoxLayout(productCard, BoxLayout.Y_AXIS));
@@ -125,7 +127,7 @@ public class ProductsPanel extends JPanel {
         return  productCard;
     }
 
-    private void addToShipment(Products product,JSpinner spinner){
+    private void addToShipment(Products.Node product,JSpinner spinner){
         int count=((SpinnerNumberModel)spinner.getModel()).getNumber().intValue();
         for (int i=0;i<count;i++){
             shipmentProducts.put(product.getName(),count);
@@ -180,7 +182,7 @@ public class ProductsPanel extends JPanel {
         mealListPanel.setBackground(Color.LIGHT_GRAY);
 
         double totalPrice = 0;
-        for (Products product : shipment) {
+        for (Products.Node product : shipment) {
             mealListPanel.add(createOrderedProductPanel(product));
             totalPrice += product.getPrice();
         }
@@ -265,7 +267,7 @@ public class ProductsPanel extends JPanel {
         revalidate();
         repaint();
     }
-    private JPanel createOrderedProductPanel(Products product) {
+    private JPanel createOrderedProductPanel(Products.Node product) {
         JPanel productPanel=new JPanel();
         productPanel.setLayout(new BoxLayout(productPanel,BoxLayout.X_AXIS));
         productPanel.setBackground(Color.decode("#FFF5EE"));
