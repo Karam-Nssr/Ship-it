@@ -330,7 +330,7 @@ public class ProductsPanel extends JPanel {
                 JOptionPane.showMessageDialog(this,"Please enter a Location.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             System.out.println("Ordered "+shipmentProducts);
-            shipmentTree.insert(id,  location, finalTotalPrice1,  date,priority);
+            shipmentTree.insert(id,  location, finalTotalPrice1,  date,priority,shipment);
             id++;
             JOptionPane.showMessageDialog(this,"Shipment Submitted!\n"
                     + "Type: " + shipmentType + "\n"

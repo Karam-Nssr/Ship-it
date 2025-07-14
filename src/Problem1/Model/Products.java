@@ -37,6 +37,13 @@ public class Products {
             return quantity;
         }
     }
+    public boolean LimitProducts(){
+        int currSize = 0;
+        for(Node node : products){
+            currSize += node.quantity;
+        }
+        return currSize < 100;
+    }
 
 
     public void insert(int id, String name, double price, int quantity) {

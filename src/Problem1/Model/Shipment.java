@@ -2,6 +2,7 @@ package Problem1.Model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Shipment {
     Node root;
@@ -14,12 +15,14 @@ public class Shipment {
         String location;
         double cost;
         String date;
+        List<Products.Node> products;
 
-        public Node(int id, String location, double cost, String date) {
+        public Node(int id, String location, double cost, String date,List<Products.Node> products) {
             this.id = id;
             this.location = location;
             this.cost = cost;
             this.date = date;
+            this.products=products;
             left = right = null;
         }
 
@@ -39,8 +42,8 @@ public class Shipment {
             return date;
         }
     }
-    public void insert(int id, String location, double cost, String date, int priority) {
-        root = insert(root, id, location, cost, date);
+    public void insert(int id, String location, double cost, String date, int priority,List<Products.Node> products) {
+        root = insert(root, id, location, cost, date,products);
         maxHeapShipment.insert(id, location, cost, date, priority);
 
     }
@@ -55,19 +58,19 @@ public class Shipment {
             return;
         }
         collectShipments(node.left, products);
-        products.add(new Shipment.Node(node.id, node.location, node.cost, node.date));
+        products.add(new Shipment.Node(node.id, node.location, node.cost, node.date,node.products));
         collectShipments(node.right, products);
     }
 
-    private Node insert(Node root, int id, String location, double cost, String date) {
+    private Node insert(Node root, int id, String location, double cost, String date,List<Products.Node> products) {
         if (root == null) {
-            root = new Node(id, location, cost, date);
+            root = new Node(id, location, cost, date,products);
             return root;
         }
         if (id < root.id) {
-            root.left = insert(root.left, id, location, cost, date);
+            root.left = insert(root.left, id, location, cost, date,products);
         } else if (id > root.id) {
-            root.right = insert(root.right, id, location, cost, date);
+            root.right = insert(root.right, id, location, cost, date,products);
         }
         return root;
     }
@@ -95,7 +98,7 @@ public class Shipment {
     Node Adjust(Node node, int id, String date){
         Node wantedNode = search(node, id);
         if (wantedNode == null) return null;
-        wantedNode = new Node(wantedNode.id, wantedNode.location, wantedNode.cost, date);
+        wantedNode = new Node(wantedNode.id, wantedNode.location, wantedNode.cost, date,wantedNode.products);
         // M: Make sure what to return
         return wantedNode;
     }
