@@ -28,15 +28,5 @@ public class InputPanel extends JPanel {
         add(MTextField);
         add(new JLabel());
         add(submitButton);
-
-        submitButton.addActionListener(e->{
-            try {
-                m = Integer.parseInt(MTextField.getText());
-                n = Integer.parseInt(NTextField.getText());
-            }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Please enter valid numbers!");
-            }
-        });
     }
 }

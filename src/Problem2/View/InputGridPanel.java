@@ -5,22 +5,26 @@ import java.awt.*;
 
 public class InputGridPanel extends JPanel {
 JTextField[][] fields;
-int Grid[][];
-JButton Solve=new JButton("Solve");
+int grid[][];
+int n;
+int m;
 
     public InputGridPanel( int n, int m) {
-        this.setLayout(new GridLayout(n+1, m-1, 5, 5));
+        this.n = n;
+        this.m = m;
+        this.setLayout(new BorderLayout());
+        JPanel gridPanel = new JPanel() ;
+        gridPanel.setLayout(new GridLayout(n, m, 1, 1));
         fields = new JTextField[n][m];
-        Grid = new int[n][m];
+        grid = new int[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 fields[i][j] = new JTextField();
                 fields[i][j].setHorizontalAlignment(JTextField.CENTER);
-                this.add(fields[i][j]);
+                gridPanel.add(fields[i][j]);
             }
         }
-        add(Solve);
-
+        add(gridPanel,BorderLayout.CENTER);
     }
 
     public String getCellValue(int i, int j) {
@@ -29,6 +33,33 @@ JButton Solve=new JButton("Solve");
 
     public void setCellValue(int i, int j, String value) {
         fields[i][j].setText(value);
+    }
+
+    // a function to validate that all the inputs are valid
+    public boolean validGrid (){
+        try {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    grid[i][j] = Integer.parseInt(fields[i][j].getText()) ;
+                }
+            }
+            return true;
+        }
+        catch (Exception ex) {
+            return false;
+        }
+    }
+    // a function to return the inputs as an array
+    public int[][] getGrid() {
+        return grid;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public int getM() {
+        return m;
     }
 }
 

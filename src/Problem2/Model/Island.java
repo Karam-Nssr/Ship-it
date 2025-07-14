@@ -1,7 +1,7 @@
 package Problem2.Model;
 import java.util.*;
 
-public class Aya {
+public class Island {
     List <List<Integer>> graph = new ArrayList<>() ;
     Set <Integer> pacific = new HashSet<>() ;
     Set <Integer> atlantic = new HashSet<>() ;
@@ -41,10 +41,7 @@ public class Aya {
             }
         }
     }
-    void ans () {
-        System.out.println();
-        System.out.println("The graph :   ");
-        System.out.println(graph.toString());
+    public void ans () {
         boolean [] visited = new boolean [n*m];
         Arrays.fill(visited, false);
 
@@ -69,9 +66,6 @@ public class Aya {
                 dfs(visited, cur, pacific);
             }
         }
-        System.out.println();
-        System.out.println("Pacific Set :   ");
-        System.out.println(pacific.toString());
 
         Arrays.fill(visited, false);
         // Atlantic ocean :
@@ -91,16 +85,9 @@ public class Aya {
                 dfs(visited, cur, atlantic);
             }
         }
-        System.out.println();
-        System.out.println("Atlantic Set :   ");
-        System.out.println(atlantic.toString());
-
-        System.out.println();
-        System.out.println("Answer Set :   ");
         for (int i : pacific){
             if (atlantic.contains(i)){
                 ans.add(i) ;
-                System.out.println(i/m+ " " +i%m);
             }
         }
     }
@@ -125,15 +112,5 @@ public class Aya {
 
     public Set<Integer> getAns() {
         return ans;
-    }
-
-    public static void main(String[] args) {
-        // Problem 2 :
-         int[][] arr = {{1,2,2,3,5},{3,2,3,4,4},{2,4,5,3,1},{6,7,1,4,5},{5,1,1,2,4}};
-
-        Aya graph = new Aya();
-        graph.toGraph(arr, 5, 5);
-        graph.ans();
-
     }
 }
