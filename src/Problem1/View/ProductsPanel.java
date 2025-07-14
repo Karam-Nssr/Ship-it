@@ -19,16 +19,16 @@ public class ProductsPanel extends JPanel {
         this.parentFrame=parentFrame;
         productsTree =new Products();
         shipmentTree=new Shipment();
-        productsTree.insert(5,"test1",100,1);
-        productsTree.insert(2,"test2",100,7);
-        productsTree.insert(4,"test3",100,2);
-        productsTree.insert(8,"test4",100,5);
-        productsTree.insert(0,"test5",100,3);
-        productsTree.insert(10,"test6",100,6);
-        productsTree.insert(1,"test7",100,3);
-        productsTree.insert(3,"test8",100,3);
-        productsTree.insert(6,"test9",100,2);
-        productsTree.insert(0,"test10",100,4);
+        productsTree.insert(5,"test1",100,1,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(2,"test2",100,7,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(4,"test3",100,2,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(8,"test4",100,5,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(0,"test5",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(10,"test6",100,6,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(1,"test7",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(3,"test8",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(6,"test9",100,2,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(0,"test10",100,4,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
         productsTree.inOrder(productsTree.getRoot());
         UI();
     }
@@ -69,7 +69,7 @@ public class ProductsPanel extends JPanel {
 
         productCard.add(Box.createRigidArea(new Dimension(0,10)));
         JLabel imageLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon("./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        ImageIcon imageIcon = new ImageIcon(product.getImagePath());
         Image foodImage = imageIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(foodImage));
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -114,16 +114,16 @@ public class ProductsPanel extends JPanel {
         productCard.add(addToOrderButton);
         productCard.add(Box.createRigidArea(new Dimension(0,5)));
 
-        /*JButton editButton = ButtonDesign("Edit", () -> showMealDialog(product));
+        JButton editButton = ButtonDesign("Edit", () -> editProduct(product));
         editButton.setBackground(Color.decode("#FFA500"));
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(editButton);
         productCard.add(Box.createRigidArea(new Dimension(0,5)));
-        JButton removeButton = ButtonDesign("Remove", () -> removeMeal(product));
+        JButton removeButton = ButtonDesign("Remove", () -> removeProduct(product));
         removeButton.setBackground(Color.decode("#FF4500"));
         removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        productCard.add(removeButton);*/
-
+        productCard.add(removeButton);
+        productCard.add(Box.createRigidArea(new Dimension(0,5)));
         return  productCard;
     }
 
@@ -141,7 +141,6 @@ public class ProductsPanel extends JPanel {
         toolbar.add(ButtonDesign("View Products",this::showProducts));
         toolbar.add(ButtonDesign("Order",this::createOrderPanel));
         toolbar.add(ButtonDesign("View Shipments",this::showShipments));
-        toolbar.add(ButtonDesign("Report", this::showReport));
         toolbar.add(ButtonDesign("Home",() -> parentFrame.switchToPanel("HomePanel")));
         return toolbar;
     }
@@ -181,16 +180,19 @@ public class ProductsPanel extends JPanel {
         JTextField idField = new JTextField();
         JTextField priceField = new JTextField();
         JTextField quantityField = new JTextField();
+        JTextField imageField=new JTextField();
 
         nameField.setMaximumSize(new Dimension(300, 30));
         idField.setMaximumSize(new Dimension(300, 30));
         priceField.setMaximumSize(new Dimension(300, 30));
         quantityField.setMaximumSize(new Dimension(300, 30));
+        imageField.setMaximumSize(new Dimension(300, 30));
 
         inputPanel.add(labeledField("Product Name:", nameField));
         inputPanel.add(labeledField("Product ID (integer):", idField));
         inputPanel.add(labeledField("Price (e.g. 99.99):", priceField));
         inputPanel.add(labeledField("Quantity (integer):", quantityField));
+        inputPanel.add(labeledField("Image Path:",imageField));
 
         int result = JOptionPane.showConfirmDialog(
                 this,
@@ -206,13 +208,14 @@ public class ProductsPanel extends JPanel {
                 int id = Integer.parseInt(idField.getText().trim());
                 double price = Double.parseDouble(priceField.getText().trim());
                 int quantity = Integer.parseInt(quantityField.getText().trim());
+                String path=imageField.getText().trim();
 
                 if (name.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Product name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                productsTree.insert(id, name, price, quantity);
+                productsTree.insert(id, name, price, quantity,path);
                 JOptionPane.showMessageDialog(this, "Product added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 Refresh();
             } catch (NumberFormatException e) {
@@ -315,6 +318,7 @@ public class ProductsPanel extends JPanel {
         JButton submitButton = ButtonDesign("Submit Order", () -> {
             String shipmentType = (String) shipmentTypeComboBox.getSelectedItem();
             int priority=0;
+            assert shipmentType != null;
             if(shipmentType.equals("Important")){
                 priority=2;
             }
@@ -389,7 +393,6 @@ public class ProductsPanel extends JPanel {
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             productsPanel.add(scrollPane, BorderLayout.CENTER);
         }
-
         revalidate();
         repaint();
     }
@@ -431,6 +434,50 @@ public class ProductsPanel extends JPanel {
         date.setForeground(Color.decode("#34495E"));
         date.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        card.add(Box.createRigidArea(new Dimension(0,10)));
+        String status;
+        if(shipment.getPriority()==0){
+            status="Normal";
+        } else if (shipment.getPriority()==1) {
+            status="Special";
+        }
+        else{
+            status="Important";
+        }
+        JLabel statusLabel = new JLabel("Status: "+ status);
+        statusLabel.setForeground(Color.decode("#2F4F4F"));
+        statusLabel.setFont(new Font("Arial", Font.ITALIC, 12));
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(statusLabel);
+        card.add(Box.createRigidArea(new Dimension(0,5)));
+
+        String[] shipmentTypes = { "Important", "Special", "Normal" };
+        JComboBox<String> priorities=new JComboBox<>(shipmentTypes);
+        priorities.setSelectedItem(shipment.getPriority());
+        priorities.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(priorities);
+        card.add(Box.createRigidArea(new Dimension(0,5)));
+
+        shipmentTree.inOrder(shipmentTree.getRoot());
+        JButton updateStatusButton =ButtonDesign("Update Status",() ->{
+            String selectedStatus = (String) priorities.getSelectedItem();
+            assert selectedStatus != null;
+            shipment.setPriority(0);
+            if(selectedStatus.equals("Important")){
+                shipment.setPriority(2);
+            }
+            if(selectedStatus.equals("Special")){
+                shipment.setPriority(1);
+            }
+            statusLabel.setText("Status: " + selectedStatus);
+            JOptionPane.showMessageDialog(card, "Order status updated to " + selectedStatus, "Status Updated", JOptionPane.INFORMATION_MESSAGE);
+        });
+        updateStatusButton.setBackground(Color.decode("#32CD32"));
+        updateStatusButton.setForeground(Color.WHITE);
+        updateStatusButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(updateStatusButton);
+        card.add(Box.createRigidArea(new Dimension(0,5)));
+
         card.add(title);
         card.add(Box.createRigidArea(new Dimension(0, 10)));
         card.add(location);
@@ -440,7 +487,41 @@ public class ProductsPanel extends JPanel {
         return card;
     }
 
-    public void showReport(){
-        System.out.println("Nigga");
+    private void editProduct(Products.Node product) {
+        String price = JOptionPane.showInputDialog(this, "Product's Price:", product != null ? product.getPrice() : "0");
+        String quantitiy = JOptionPane.showInputDialog(this, "Product's Quantity:", product != null ? product.getQuantity() : "0");
+        //String imagePath=JOptionPane.showInputDialog(this, "Product's Image Path:", product != null ? product.get_ImagePath() :"Product.jpg");
+        if (price != null && quantitiy != null) {
+            try {
+                double priceValue = Double.parseDouble(price);
+                int quantityValue = Integer.parseInt(quantitiy);
+
+                if(priceValue!=product.getPrice() && quantityValue!=product.getQuantity()){
+                    productsTree.Adjust(product.getId(),"Price & Quantity",priceValue,quantityValue);
+                } else if (priceValue!=product.getPrice()) {
+                    productsTree.Adjust(product.getId(),"Price",priceValue,quantityValue);
+                }
+                else if (quantityValue!=product.getQuantity()){
+                    productsTree.Adjust(product.getId(),"Quantity",priceValue,quantityValue);
+                } else{
+                    productsTree.Adjust(product.getId(),"Price & Quantity",priceValue,quantityValue);
+                }
+
+                JOptionPane.showMessageDialog(this, "Meal saved successfully!");
+                productsTree.inOrder(productsTree.getRoot());
+                Refresh();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid price or quantity format.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void removeProduct(Products.Node product) {
+        int confirm=JOptionPane.showConfirmDialog(this,"Are you sure you want to remove " + product.getName() + "?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm==JOptionPane.YES_OPTION) {
+            productsTree.delete(product.getId());
+            JOptionPane.showMessageDialog(this,product.getName()+" removed successfully.");
+            Refresh();
+        }
     }
 }

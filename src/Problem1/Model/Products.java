@@ -13,13 +13,21 @@ public class Products {
         String name;
         double price;
         int quantity;
+        String imagePath;
 
-        public Node(int id, String name, double price, int quantity) {
+        public Node(int id, String name, double price, int quantity,String imagePath) {
             this.id = id;
             this.name = name;
             this.price = price;
             this.quantity = quantity;
+            this.imagePath=imagePath;
             left = right = null;
+        }
+        public void SetNode(int id, String name, double price, int quantity){
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
         }
         public int getId() {
             return id;
@@ -36,6 +44,9 @@ public class Products {
         public int getQuantity() {
             return quantity;
         }
+        public String getImagePath(){
+            return imagePath;
+        }
     }
     public boolean LimitProducts(){
         int currSize = 0;
@@ -46,27 +57,28 @@ public class Products {
     }
 
 
-    public void insert(int id, String name, double price, int quantity) {
+    public void insert(int id, String name, double price, int quantity,String imagePath) {
         avlProduct.insert(id, name, price, quantity);
-        root = insert(root, id, name, price, quantity);
+        root = insert(root, id, name, price, quantity,imagePath);
     }
 
-    private Node insert(Node root, int id, String name, double price, int quantity) {
+    private Node insert(Node root, int id, String name, double price, int quantity,String imagePath) {
         if (root == null) {
-            root = new Node(id, name, price, quantity);
+            root = new Node(id, name, price, quantity,imagePath);
             return root;
         }
         if (id < root.id) {
-            root.left = insert(root.left, id, name, price, quantity);
+            root.left = insert(root.left, id, name, price, quantity,imagePath);
         } else if (id > root.id) {
-            root.right = insert(root.right, id, name, price, quantity);
+            root.right = insert(root.right, id, name, price, quantity,imagePath);
         }
         return root;
     }
 
-    public void search(int id){
+    public boolean search(int id){
         avlProduct.search(id);
-        root = search(root, id);
+        search(root, id);
+        return root !=null;
     }
     Node search(Node node, int id) {
         if (node == null) {
@@ -83,23 +95,21 @@ public class Products {
     }
     public void Adjust(int id, String type, double price, int quantity){
         avlProduct.Adjust(id, type, price, quantity);
-        root = Adjust(root, id, type, price, quantity);
-
+        Adjust(root, id, type, price, quantity);
     }
-    Node Adjust(Node node, int id, String type, double price, int quantity){
+    void Adjust(Node node, int id, String type, double price, int quantity){
         Node wantedNode = search(node, id);
-        if (wantedNode == null) return null;
+        if (wantedNode == null) return;
         if (type.equals("Price")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, price, wantedNode.quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, price, wantedNode.quantity);
         }
         else if (type.equals("Quantity")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, wantedNode.price, quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, wantedNode.price, quantity);
 
         }
         else if (type.equals("Price & Quantity")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, price, quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, price, quantity);
         }
-        return wantedNode;
     }
 
     public ArrayList<Products.Node> getProducts(Node node) {
@@ -113,7 +123,7 @@ public class Products {
             return;
         }
         collectProducts(node.left, products);
-        products.add(new Products.Node(node.id, node.name, node.price, node.quantity));
+        products.add(new Products.Node(node.id, node.name, node.price, node.quantity,node.imagePath));
         collectProducts(node.right, products);
     }
 

@@ -17,6 +17,12 @@ public class AVLProduct {
             left = right = null;
             height = 1;
         }
+        public void SetNode(int id, String name, double price, int quantity){
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
     }
 
     int height(Node N) {
@@ -203,21 +209,20 @@ public class AVLProduct {
         return current;
     }
     public void Adjust(int id, String type, double price, int quantity){
-        root = Adjust(root, id, type, price, quantity);
+        Adjust(root, id, type, price, quantity);
 
     }
-    Node Adjust(Node node, int id, String type, double price, int quantity){
+    void Adjust(Node node, int id, String type, double price, int quantity){
         Node wantedNode = search(node, id);
-        if (wantedNode == null) return null;
+        if (wantedNode == null) return;
         if (type.equals("Price")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, price, wantedNode.quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, price, wantedNode.quantity);
         }
         else if (type.equals("Quantity")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, wantedNode.price, quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, wantedNode.price, quantity);
         }
         else if (type.equals("Price & Quantity")){
-            wantedNode = new Node(wantedNode.id, wantedNode.name, price, quantity);
+            wantedNode.SetNode(wantedNode.id, wantedNode.name, price, quantity);
         }
-        return wantedNode;
     }
 }
