@@ -183,6 +183,10 @@ public class Products {
     public Node getRoot() {
         return root;
     }
-
-
+    public int productsNumber(Node node){
+        if (node == null) {
+            return 0;
+        }
+        return productsNumber(node.left) + node.quantity + productsNumber(node.right);
+    }
 }

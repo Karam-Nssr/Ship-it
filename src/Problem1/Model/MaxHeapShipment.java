@@ -42,6 +42,10 @@ public class MaxHeapShipment {
         public int getPriority() {
             return priority;
         }
+        public void setPriority(int priority) {
+            this.priority = priority;
+        }
+
     }
 
     public MaxHeapShipment(int capacity) {
@@ -61,7 +65,7 @@ public class MaxHeapShipment {
     private int rightChild(int index) {
         return 2 * index + 2;
     }
-    private Node peak(){
+    public Node peak(){
         return heap[0];
     }
 
@@ -127,11 +131,12 @@ public class MaxHeapShipment {
             heapifyDown(index);
         }
     }
-    public void Adjust(int id, int priority) {
+    public void Adjust(int id, int priority,String date) {
         int index = 0;
         for (int i = 0; i < size; i++) {
             if (heap[i].id == id) {
                 heap[i].priority = priority;
+                heap[i].date=date;
                 index = i;
                 break;
             }

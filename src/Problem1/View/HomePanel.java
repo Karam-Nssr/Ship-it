@@ -21,8 +21,8 @@ public class HomePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(nameLabel, gbc);
 
-        viewProductsButton = new ButtonDesign("View Products",this::productAction);
-        viewShipmentsButton = new ButtonDesign("View Shipments",this::shipmentAction);
+        viewProductsButton = new ButtonDesign("View Products & Shipments",this::productAction);
+        viewShipmentsButton = new ButtonDesign("View Island",this::islandAction);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -48,7 +48,7 @@ public class HomePanel extends JPanel {
        viewProductsButton.addActionListener(e -> parentFrame.switchToPanel("ProductsPanel"));
 
    }
-    public void shipmentAction(){
-        viewShipmentsButton.addActionListener(e -> parentFrame.switchToPanel("ShipmentsPanel"));
+    public void islandAction(){
+        viewShipmentsButton.addActionListener(e -> new Problem2.Controler.Controler());
     }
 }

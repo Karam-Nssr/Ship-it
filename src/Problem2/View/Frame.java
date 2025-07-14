@@ -18,7 +18,6 @@ public class Frame extends JFrame {
         }
 
         setSize(400, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         cards = new CardLayout();
         setLayout(cards);

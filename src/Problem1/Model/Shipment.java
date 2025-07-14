@@ -8,6 +8,10 @@ public class Shipment {
     ArrayList<Node> shipments;
     MaxHeapShipment maxHeapShipment = new MaxHeapShipment(50);
 
+    public MaxHeapShipment getMaxHeapShipment() {
+        return maxHeapShipment;
+    }
+
     public class Node {
         Node left, right;
         int id;
@@ -57,6 +61,9 @@ public class Shipment {
 
         public void setPriority(int priority) {
             this.priority = priority;
+        }
+        public void setDate(String date) {
+            this.date = date;
         }
     }
     public void insert(int id, String location, double cost, String date, int priority,List<Products.Node> products) {
@@ -109,7 +116,7 @@ public class Shipment {
     }
     public void Adjust(int id, String date, int priority){
         Adjust(root, id, date);
-        if (priority != 0) maxHeapShipment.Adjust(id, priority);
+        if (priority != 0) maxHeapShipment.Adjust(id, priority,date);
 
     }
     void Adjust(Node node, int id, String date){
