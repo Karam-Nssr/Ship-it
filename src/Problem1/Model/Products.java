@@ -44,6 +44,7 @@ public class Products {
         public int getQuantity() {
             return quantity;
         }
+
         public String getImagePath(){
             return imagePath;
         }

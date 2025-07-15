@@ -22,16 +22,16 @@ public class ProductsPanel extends JPanel {
         this.parentFrame=parentFrame;
         productsTree =new Products();
         shipmentTree=new Shipment();
-        productsTree.insert(5,"test1",100,1,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(2,"test2",100,7,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(4,"test3",100,2,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(8,"test4",100,5,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(0,"test5",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(10,"test6",100,6,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(1,"test7",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(3,"test8",100,3,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(6,"test9",100,2,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
-        productsTree.insert(0,"test10",100,4,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(5,"Berserk Necklace",3,10,"./src/Problem1/View/pics/Berserk-Necklace.jpg");
+        productsTree.insert(2,"Spalding Basketball",100,5,"./src/Problem1/View/pics/Basketball.jpg");
+        productsTree.insert(4,"Snoopy Bag",30,7,"./src/Problem1/View/pics/Bag.jpg");
+        productsTree.insert(8,"Vicfirth Sticks",40,4,"./src/Problem1/View/pics/Drums-Sticks.jpg");
+        productsTree.insert(0,"Kurapika Figure",150,1,"./src/Problem1/View/pics/Figure.jpg");
+        productsTree.insert(9,"Jordans",120,3,"./src/Problem1/View/pics/Jordans.jpg");
+        productsTree.insert(1,"Asus Laptop",1000,2,"./src/Problem1/View/pics/Laptop.jpg");
+        productsTree.insert(3,"Mobile",800,6,"./src/Problem1/View/pics/Mobile.jpg");
+        productsTree.insert(6,"Headphones",400,8,"./src/Problem1/View/pics/Headphones.jpg");
+        productsTree.insert(7,"Brushes Kit",20,15,"./src/Problem1/View/pics/Makeup-Brushes.jpg");
         productsTree.inOrder(productsTree.getRoot());
         heapShipment=shipmentTree.getMaxHeapShipment();
         UI();
@@ -134,9 +134,9 @@ public class ProductsPanel extends JPanel {
         spinnerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         spinnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         productCard.add(Box.createRigidArea(new Dimension(0,5)));
-        JSpinner spinner=new JSpinner(new SpinnerNumberModel(1,1,product.getQuantity(),1));
+        JSpinner spinner=new JSpinner(new SpinnerNumberModel(0,0,product.getQuantity(),1));
         Dimension size = spinner.getPreferredSize();
-        spinner.setModel(new SpinnerNumberModel(1, 1, product.getQuantity(), 1));
+        spinner.setModel(new SpinnerNumberModel(0, 0, product.getQuantity(), 1));
         spinner.setPreferredSize(size);
         productCard.add(spinnerLabel);
         productCard.add(spinner);
@@ -371,12 +371,11 @@ public class ProductsPanel extends JPanel {
 
             String location = locationField.getText();
 
-            // Get date values
             String day = (String) dayComboBox.getSelectedItem();
             String month = (String) monthComboBox.getSelectedItem();
             String year = (String) yearComboBox.getSelectedItem();
 
-            String date = year + "-" + month + "-" + (day.length() == 1 ? "0" + day : day);
+            String date=year+"-"+month+"-"+(day.length() == 1 ? "0" + day : day);
 
             LocalDate selectedDate = LocalDate.parse(date);
             LocalDate today = LocalDate.now();
@@ -386,13 +385,17 @@ public class ProductsPanel extends JPanel {
                 return;
             }
 
-            if (!selectedDate.isAfter(today)) {
-                JOptionPane.showMessageDialog(this, "Please select a future date for shipment.", "Error", JOptionPane.ERROR_MESSAGE);
+            if(!selectedDate.isAfter(today)){
+                JOptionPane.showMessageDialog(this, "Please select a future date for the shipment.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             System.out.println("Ordered " + shipmentProducts);
             shipmentTree.insert(id, location, finalTotalPrice1, date, priority, shipment);
+            for(Products.Node product : shipment){
+                int q=product.getQuantity()-1;
+                productsTree.Adjust(product.getId(),"Quantity",product.getPrice(),q);
+            }
             id++;
             JOptionPane.showMessageDialog(this, "Shipment Submitted!\n"
                     + "Type: " + shipmentType + "\n"
@@ -729,5 +732,4 @@ public class ProductsPanel extends JPanel {
         card.add(date);
         return card;
     }
-
 }
